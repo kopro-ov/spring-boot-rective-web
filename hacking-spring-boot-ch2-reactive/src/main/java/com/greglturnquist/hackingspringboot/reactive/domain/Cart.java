@@ -2,6 +2,7 @@ package com.greglturnquist.hackingspringboot.reactive.domain;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,8 +13,8 @@ public class Cart {
 
     private Cart() { }
 
-    public Cart(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
+    public Cart(String id) {
+        this(id, new ArrayList<>());
     }
 
     public Cart(String id, List<CartItem> cartItemList) {
