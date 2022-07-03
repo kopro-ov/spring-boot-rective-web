@@ -17,7 +17,7 @@ public class InventoryService {
         this.repository = repository;
     }
 
-    Flux<Item> searchByExample(String name, String description, boolean useAnd) {
+    public Flux<Item> searchByExample(String name, String description, boolean useAnd) {
         Item item = new Item(name, 0.0, description);
 
         ExampleMatcher matcher = (useAnd
