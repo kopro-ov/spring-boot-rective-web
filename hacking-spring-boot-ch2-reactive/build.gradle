@@ -26,6 +26,8 @@ dependencies {
     //testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     testImplementation 'io.projectreactor:reactor-test'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
