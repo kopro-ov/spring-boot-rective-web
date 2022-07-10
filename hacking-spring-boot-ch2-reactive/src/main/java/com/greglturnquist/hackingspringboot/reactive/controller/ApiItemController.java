@@ -2,11 +2,12 @@ package com.greglturnquist.hackingspringboot.reactive.controller;
 
 import com.greglturnquist.hackingspringboot.reactive.domain.Item;
 import com.greglturnquist.hackingspringboot.reactive.repository.ItemRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @RestController
 public class ApiItemController {
@@ -26,4 +27,16 @@ public class ApiItemController {
     Mono<Item> findOne(@PathVariable String id) {
         return this.repository.findById(id);
     }
+
+    @PostMapping("/api/items")
+    Mono<ResponseEntity<?>> addNewItem(@RequestBody Mono<Item> item) {
+
+        return item.flatMap(s -> this.repository.save(s))
+                .map(savedItem -> ResponseEntity
+                        .created(URI.create("/api/items/" +
+                                savedItem.getId()))
+                        .body(savedItem));
+    }
+
+
 }
