@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies
+    compileOnly 'org.springframework.boot:spring-boot-dependencies:2.4.2'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     implementation 'org.mongodb:mongodb-driver-sync'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -24,6 +26,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.projectlombok:lombok'
     //testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+    // https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin
+    implementation 'pl.project13.maven:git-commit-id-plugin:2.2.1'
     implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     testImplementation 'io.projectreactor:reactor-test'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
