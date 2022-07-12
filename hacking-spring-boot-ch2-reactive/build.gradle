@@ -1,7 +1,10 @@
 plugins {
     id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    // gradle7.0부터는 org.asciidoctor.convert 사용x
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
     id 'java'
+
 }
 
 group = 'com.greglturnquist'
@@ -10,6 +13,10 @@ sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
 }
 
 dependencies {
@@ -32,6 +39,34 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+}
+
+
+// asciidoctor 설정
+asciidoctor {
+    dependsOn test
+    inputs.dir snippetsDir
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'BOOT-INF/classes/static/docs'
+    }
+}
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+build {
+    dependsOn copyDocument
 }
 
 tasks.named('test') {
